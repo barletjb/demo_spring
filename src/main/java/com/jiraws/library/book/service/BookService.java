@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.jiraws.library.book.service;
 
+import com.jiraws.library.book.persistence.BookRepository;
+import com.jiraws.library.book.model.BookEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

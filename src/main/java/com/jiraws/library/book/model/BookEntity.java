@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.jiraws.library.book.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
