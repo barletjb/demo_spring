@@ -30,7 +30,7 @@ public class BookRestController {
     public String createBook(@RequestBody BookDTO.PostInput input) {
 
         log.info(input.getBookName());
-        log.info(input.getBookPages().toString());
+        log.info(String.valueOf(input.getBookPages()));
 
         return bookService.createBook(input.getBookName(), input.getBookPages());
     }

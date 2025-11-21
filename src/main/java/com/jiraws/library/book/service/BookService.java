@@ -2,6 +2,7 @@ package com.jiraws.library.book.service;
 
 import com.jiraws.library.book.persistence.BookRepository;
 import com.jiraws.library.book.model.BookEntity;
+import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,14 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public String createBook(String bookName, Integer bookPages) {
+
+        if(bookName == null || StringUtils.isBlank(bookName)) {
+            return "Le book name ne peux être nul";
+        }
+
+        if(bookPages == null || bookPages <= 0) {
+            return "Le nombre de pages doit être supérieur à 0";
+        }
 
         BookEntity existingBook =  bookRepository.findByNameAndPages(bookName, bookPages);
 
