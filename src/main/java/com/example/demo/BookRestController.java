@@ -1,19 +1,17 @@
 package com.example.demo;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@AllArgsConstructor
 @RestController
 public class BookRestController {
 
-    private final BookRepository bookRepository;
-
-    public BookRestController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private final BookService bookService;
 
     @GetMapping("/book")
     public String getBook(@RequestParam String bookName, @RequestParam Integer bookPages) {
@@ -21,23 +19,7 @@ public class BookRestController {
         log.info(bookName);
         log.info(bookPages.toString());
 
-        BookEntity existingBook =  bookRepository.findByNameAndPages(bookName, bookPages);
-
-        if (existingBook == null) {
-
-            BookEntity newbook = BookEntity.builder()
-                    .name(bookName)
-                    .pages(bookPages)
-                    .build();
-
-            bookRepository.save(newbook);
-
-            return "Création du livre";
-        }
-        else {
-
-            return "Le livre existe déjà";
-        }
+        return bookService.createBook(bookName, bookPages);
 
     }
 
