@@ -11,16 +11,26 @@ public class BookDTO {
 
 
     @AllArgsConstructor
-    @NoArgsConstructor
     @Data
     @Builder
     public static class PostInput {
 
         @NotNull @NotBlank
-        private String bookName;
+        String bookName;
 
         @NotNull
-        private Integer bookPages;
+        Integer bookPages;
+    }
 
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    @Builder
+    public static class PostOutput {
+
+        Long id;
+        String bookName;
+        Integer bookPages;
     }
 }

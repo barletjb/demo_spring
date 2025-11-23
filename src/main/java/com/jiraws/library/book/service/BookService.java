@@ -13,7 +13,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
-    public String createBook(String bookName, Integer bookPages) throws BookCreationException {
+    public BookEntity createBook(String bookName, Integer bookPages) throws BookCreationException {
 
         if(bookName == null || StringUtils.isBlank(bookName)) {
             throw new BookCreationException("Book name is null or empty");
@@ -25,22 +25,17 @@ public class BookService {
 
         BookEntity existingBook =  bookRepository.findByNameAndPages(bookName, bookPages);
 
-        if (existingBook == null) {
-
-            BookEntity newbook = BookEntity.builder()
-                    .name(bookName)
-                    .pages(bookPages)
-                    .build();
-
-            bookRepository.save(newbook);
-
-            return "Création du livre";
-        }
-        else {
-
+        if (existingBook != null) {
             throw new BookCreationException("Le livre existe déjà");
         }
 
-    }
+        BookEntity newBook = BookEntity.builder()
+                .name(bookName)
+                .pages(bookPages)
+                .build();
 
+        bookRepository.save(newBook);
+
+        return newBook;
+    }
 }
