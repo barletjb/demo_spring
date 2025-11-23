@@ -1,5 +1,6 @@
 package com.jiraws.library.book.service;
 
+import com.jiraws.library.book.model.exception.BookCreationException;
 import com.jiraws.library.book.persistence.BookRepository;
 import com.jiraws.library.book.model.BookEntity;
 import io.micrometer.common.util.StringUtils;
@@ -12,14 +13,14 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
-    public String createBook(String bookName, Integer bookPages) {
+    public String createBook(String bookName, Integer bookPages) throws BookCreationException {
 
         if(bookName == null || StringUtils.isBlank(bookName)) {
-            return "Le book name ne peux être nul";
+            throw new BookCreationException("Book name is null or empty");
         }
 
         if(bookPages == null || bookPages <= 0) {
-            return "Le nombre de pages doit être supérieur à 0";
+            throw new BookCreationException("Le nombre de pages doit être supérieur à 0");
         }
 
         BookEntity existingBook =  bookRepository.findByNameAndPages(bookName, bookPages);
@@ -37,7 +38,7 @@ public class BookService {
         }
         else {
 
-            return "Le livre existe déjà";
+            throw new BookCreationException("Le livre existe déjà");
         }
 
     }

@@ -1,5 +1,7 @@
 package com.jiraws.library.book.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +16,10 @@ public class BookDTO {
     @Builder
     public static class PostInput {
 
+        @NotNull @NotBlank
         private String bookName;
+
+        @NotNull
         private Integer bookPages;
 
     }
